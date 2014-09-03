@@ -1,5 +1,5 @@
 <% if @feed_items.any? %>
-  <div id="masonry-container" class="masonry-container .transitions-enabled infinite-scroll clearfix masonry .masonry-brick">
+  <div id="masonry-container" class="masonry-container transitions-enabled infinite-scroll clearfix masonry masonry-brick">
 <ol class="microposts">
     <%= render partial: 'shared/feed_item', collection: @feed_items %>
   </ol>
