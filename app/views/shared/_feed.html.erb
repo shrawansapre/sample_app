@@ -1,5 +1,5 @@
 <% if @feed_items.any? %>
-  <div id="masonry-container" class="masonry-container transitions-enabled infinite-scroll clearfix">
+  <div id="masonry-container" class="masonry-container .transitions-enabled infinite-scroll clearfix masonry .masonry-brick">
 <ol class="microposts">
     <%= render partial: 'shared/feed_item', collection: @feed_items %>
   </ol>
@@ -8,14 +8,41 @@
 
 
 <script>
-$(function(){  
-  $('#masonry-container').masonry({
-    itemSelector: '.box',
-    columnWidth: 150,
-    gutterWidth: 20,
-    isAnimated: true,
-    isFitWidth: false
+$(function(){
+
+  var $container = $('#masonry-container');
+
+  $container.imagesLoaded(function(){
+    $container.masonry({
+      itemSelector: '.box',
+      columnWidth: function( containerWidth ) {
+    return containerWidth / 5;
+  },
+      gutterWidth: 0,
+      isFitWidth: false
+    });
   });
 
+  $container.infinitescroll({
+    navSelector  : '#page-nav',    // selector for the paged navigation 
+    nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
+    itemSelector : '.box',     // selector for all items you'll retrieve
+    loading: {
+        finishedMsg: 'No more pages to load.',
+        img: 'http://i.imgur.com/6RMhx.gif'
+      }
+    },
+    // trigger Masonry as a callback
+    function( newElements ) {
+      // hide new items while they are loading
+      var $newElems = $( newElements ).css({ opacity: 0 });
+      // ensure that images load before adding to masonry layout
+      $newElems.imagesLoaded(function(){
+        // show elems now they're ready
+        $newElems.animate({ opacity: 1 });
+        $container.masonry( 'appended', $newElems, true ); 
+      });
+    }
+  );
 });
 </script>
