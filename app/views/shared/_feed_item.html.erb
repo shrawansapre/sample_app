@@ -1,6 +1,12 @@
+<div class="box col6">
 <li id="<%= feed_item.id %>">
-  <%= link_to image_tag(feed_item.user.avatar.url), feed_item.user %>
-    <span class="user">
+ <%if feed_item.user.avatar?%>
+<%= link_to image_tag(feed_item.user.avatar.url(:thumb)), feed_item.user %>
+<% else %>
+<%= link_to gravatar_for(feed_item.user) %> 
+ <%end%>
+
+  <span class="user">
       <%= link_to feed_item.user.name, feed_item.user %>
     </span>
     <span class="content"><%= feed_item.content %></span>
@@ -13,3 +19,4 @@
                                      title: feed_item.content %>
   <% end %>
 </li>
+</div>

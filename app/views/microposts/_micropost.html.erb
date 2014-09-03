@@ -1,3 +1,4 @@
+<div class="box col6">
 <li>
   <span class="content"><%= micropost.content %></span>
   <span class="timestamp">
@@ -5,7 +6,8 @@
   </span>
   <% if current_user?(micropost.user) %>
     <%= link_to "delete", micropost, method: :delete,
-                                     data: { confirm: "You sure?" },
+                                     data: { confirm: "Are you sure?" },
                                      title: micropost.content %>
   <% end %>
 </li>
+</div>
