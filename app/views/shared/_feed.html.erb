@@ -1,5 +1,5 @@
 <% if @feed_items.any? %>
-  <div id="masonry-container" class="transitions-enabled infinite-scroll clearfix">
+  <div id="masonry-container" class="masonry-container transitions-enabled infinite-scroll clearfix">
 <ol class="microposts">
     <%= render partial: 'shared/feed_item', collection: @feed_items %>
   </ol>
@@ -13,7 +13,7 @@ $(function(){
     itemSelector: '.box',
     columnWidth: 150,
     gutterWidth: 20,
-    isAnimated: !Modernizr.csstransitions,
+    isAnimated: true,
     isFitWidth: false
   });
 
